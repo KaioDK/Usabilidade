@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="VisionShop — loja acessível para pessoas com deficiência visual. Alto contraste, fontes grandes, navegação por teclado e suporte a leitores de tela." />
+  <title>VisionShop | Loja Acessível</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<a class="skip-link" href="#main-content">Pular para o conteúdo principal</a>
+<div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+
+<header class="site-header" role="banner">
+  <div class="site-header-inner">
+    <a class="brand" href="#" aria-label="VisionShop — página inicial">VisionShop</a>
+    <nav class="main-nav" aria-label="Navegação principal">
+      <a href="#" class="active" aria-current="page">Loja</a>
+      <a href="#a11y-features">Acessibilidade</a>
+      <a href="#footer">Contato</a>
+    </nav>
+    <div class="header-actions">
+      <button class="icon-btn" id="cartOpenBtn" aria-label="Abrir carrinho. 0 itens." aria-haspopup="dialog" aria-expanded="false">
+        🛒
+        <span class="cart-badge" id="cartBadge" aria-hidden="true">0</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="a11y-banner" role="note">
+  <strong>Dica:</strong> Use <kbd>Tab</kbd> para navegar, <kbd>Enter</kbd> para ativar, e os botões no canto inferior direito para ajustar o tamanho do texto.
+</div>
+
+<div class="a11y-panel" role="group" aria-label="Controles de acessibilidade">
+  <button class="a11y-btn" id="fontNormal" aria-pressed="true" onclick="setFont('normal')">
+    <span aria-hidden="true">🔠</span> <span class="btn-label">Texto normal</span>
+  </button>
+  <button class="a11y-btn" id="fontLarge" aria-pressed="false" onclick="setFont('large')">
+    <span aria-hidden="true">🔠</span> <span class="btn-label">Texto maior</span>
+  </button>
+  <button class="a11y-btn" id="fontXlarge" aria-pressed="false" onclick="setFont('xlarge')">
+    <span aria-hidden="true">🔠</span> <span class="btn-label">Texto muito grande</span>
+  </button>
+  <button class="a11y-btn" id="contrastBtn" aria-pressed="false" onclick="toggleContrast()">
+    ◑ Contraste extra
+  </button>
+</div>
+
+<main id="main-content" tabindex="-1">
+
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero-inner">
+      <span class="eyebrow">Compras sem barreiras</span>
+      <h1 id="hero-title">Uma loja pensada para todos os sentidos</h1>
+      <p>Navegue com facilidade usando teclado ou leitor de tela. Alto contraste, fontes adaptáveis e descrições completas em cada produto.</p>
+      <div class="btn-group">
+        <a class="btn btn-primary" href="#products">Ver produtos</a>
+        <a class="btn btn-outline" href="#a11y-features">Como funciona</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="filters-section" aria-labelledby="filters-title">
+    <div class="filters-inner">
+      <h2 class="filters-title" id="filters-title">Filtrar produtos</h2>
+      <div class="search-wrap">
+        <span class="search-icon" aria-hidden="true">🔍</span>
+        <label for="searchInput" class="sr-only">Buscar produto pelo nome</label>
+        <input type="search" id="searchInput" class="search-input" placeholder="Buscar produto…" aria-controls="productGrid" autocomplete="off" />
+      </div>
+      <div class="filter-groups">
+        <fieldset class="filter-group">
+          <legend>Categoria</legend>
+          <div class="pills" role="group">
+            <button class="pill" aria-pressed="true"  data-filter-cat="all"        onclick="filterCat(this,'all')">Todas</button>
+            <button class="pill" aria-pressed="false" data-filter-cat="Eletronicos" onclick="filterCat(this,'Eletronicos')">Eletrônicos</button>
+            <button class="pill" aria-pressed="false" data-filter-cat="Casa"        onclick="filterCat(this,'Casa')">Casa</button>
+            <button class="pill" aria-pressed="false" data-filter-cat="Saude"       onclick="filterCat(this,'Saude')">Saúde</button>
+          </div>
+        </fieldset>
+        <fieldset class="filter-group">
+          <legend>Preço</legend>
+          <div class="pills" role="group">
+            <button class="pill" aria-pressed="true"  data-filter-price="all"  onclick="filterPrice(this,'all')">Todos</button>
+            <button class="pill" aria-pressed="false" data-filter-price="low"  onclick="filterPrice(this,'low')">Até R$ 100</button>
+            <button class="pill" aria-pressed="false" data-filter-price="mid"  onclick="filterPrice(this,'mid')">R$ 100–300</button>
+            <button class="pill" aria-pressed="false" data-filter-price="high" onclick="filterPrice(this,'high')">Acima de R$ 300</button>
+          </div>
+        </fieldset>
+      </div>
+    </div>
+  </section>
+
+  <section class="products-section" id="products" aria-labelledby="products-title">
+    <div class="products-inner">
+      <h2 id="products-title" class="sr-only">Produtos disponíveis</h2>
+      <p class="results-info" id="resultsInfo" aria-live="polite" aria-atomic="true">
+        Mostrando <strong id="resultsCount">8</strong> produtos
+      </p>
+      <div class="product-grid" id="productGrid" role="list" aria-label="Lista de produtos">
+
+        <article class="product-card" role="listitem" data-cat="Eletronicos" data-price="mid">
+          <div class="product-img" role="img" aria-label="Fone de ouvido com botões grandes">🎧</div>
+          <div class="product-body">
+            <span class="product-badge">Eletrônicos</span>
+            <h3 class="product-name">Fone com Controle de Voz</h3>
+            <p class="product-desc">Fone bluetooth com comandos de voz integrados, botões físicos grandes e narração automática das funções. Ideal para uso sem depender da tela.</p>
+            <div class="product-tags"><span class="tag">Bluetooth</span><span class="tag">Voz</span><span class="tag">Botões grandes</span></div>
+          </div>
+          <div class="product-footer">
+            <span class="price" aria-label="Preço: R$ 189,90">R$ 189,90</span>
+            <button class="add-btn" onclick="addToCart('Fone com Controle de Voz','R$ 189,90','🎧')" aria-label="Adicionar Fone com Controle de Voz ao carrinho, R$ 189,90">+ Adicionar</button>
+          </div>
+        </article>
+
+        <article class="product-card" role="listitem" data-cat="Casa" data-price="low">
+          <div class="product-img" role="img" aria-label="Lâmpada inteligente com controle por voz">💡</div>
+          <div class="product-body">
+            <span class="product-badge">Casa</span>
+            <h3 class="product-name">Lâmpada Inteligente por Voz</h3>
+            <p class="product-desc">Compatível com assistentes de voz, controle total sem precisar de aplicativo. Ajuste de brilho e temperatura de cor por comando falado.</p>
+            <div class="product-tags"><span class="tag">Voz</span><span class="tag">Sem app</span></div>
+          </div>
+          <div class="product-footer">
+            <span class="price" aria-label="Preço: R$ 79,90">R$ 79,90</span>
+            <button class="add-btn" onclick="addToCart('Lâmpada Inteligente por Voz','R$ 79,90','💡')" aria-label="Adicionar Lâmpada Inteligente por Voz ao carrinho, R$ 79,90">+ Adicionar</button>
+          </div>
+        </article>
+
+        <article class="product-card" role="listitem" data-cat="Saude" data-price="high">
+          <div class="product-img" role="img" aria-label="Leitor portátil de documentos impressos">📖</div>
+          <div class="product-body">
+            <span class="product-badge">Saúde</span>
+            <h3 class="product-name">Leitor Portátil de Documentos</h3>
+            <p class="product-desc">Dispositivo que fotografa e lê em voz alta qualquer texto impresso: bulas, contas, cardápios. Saída de áudio clara e ajustável em velocidade.</p>
+            <div class="product-tags"><span class="tag">Texto em voz</span><span class="tag">Portátil</span><span class="tag">Offline</span></div>
+          </div>
+          <div class="product-footer">
+            <span class="price" aria-label="Preço: R$ 420,00">R$ 420,00</span>
+            <button class="add-btn" onclick="addToCart('Leitor Portátil de Documentos','R$ 420,00','📖')" aria-label="Adicionar Leitor Portátil de Documentos ao carrinho, R$ 420,00">+ Adicionar</button>
+          </div>
+        </article>
+
+        <article class="product-card" role="listitem" data-cat="Eletronicos" data-price="low">
+          <div class="product-img" role="img" aria-label="Teclado com marcadores táteis em relevo">⌨️</div>
+          <div class="product-body">
+            <span class="product-badge">Eletrônicos</span>
+            <h3 class="product-name">Teclado com Marcadores Táteis</h3>
+            <p class="product-desc">Teclado USB com marcadores em relevo nas teclas principais e feedback sonoro ao pressionar. Compatível com NVDA, JAWS e outros leitores de tela.</p>
+            <div class="product-tags"><span class="tag">USB</span><span class="tag">Relevo tátil</span><span class="tag">NVDA</span></div>
+          </div>
+          <div class="product-footer">
+            <span class="price" aria-label="Preço: R$ 98,00">R$ 98,00</span>
+            <button class="add-btn" onclick="addToCart('Teclado com Marcadores Táteis','R$ 98,00','⌨️')" aria-label="Adicionar Teclado com Marcadores Táteis ao carrinho, R$ 98,00">+ Adicionar</button>
+          </div>
+        </article>
+
+        <article class="product-card" role="listitem" data-cat="Casa" data-price="mid">
+          <div class="product-img" role="img" aria-label="Etiqueta NFC identificadora de objetos">🏷️</div>
+          <div class="product-body">
+            <span class="product-badge">Casa</span>
+            <h3 class="product-name">Identificador de Objetos Falante</h3>
+            <p class="product-desc">Etiquetas NFC que você grava com a descrição de qualquer objeto. Aproxime o celular e o conteúdo é lido em voz alta automaticamente.</p>
+            <div class="product-tags"><span class="tag">NFC</span><span class="tag">Fala</span><span class="tag">Personalizável</span></div>
+          </div>
+          <div class="product-footer">
+            <span class="price" aria-label="Preço: R$ 149,00">R$ 149,00</span>
+            <button class="add-btn" onclick="addToCart('Identificador de Objetos Falante','R$ 149,00','🏷️')" aria-label="Adicionar Identificador de Objetos Falante ao carrinho, R$ 149,00">+ Adicionar</button>
+          </div>
+        </article>
+
+        <article class="product-card" role="listitem" data-cat="Saude" data-price="low">
+          <div class="product-img" role="img" aria-label="Relógio com mostrador em braille e anúncio de hora em voz">⌚</div>
+          <div class="product-body">
+            <span class="product-badge">Saúde</span>
+            <h3 class="product-name">Relógio Parlante Tátil</h3>
+            <p class="product-desc">Aperte um botão e o relógio anuncia a hora e a temperatura em voz alta. Tampa com mostrador em braille. Pulseira ajustável e resistente.</p>
+            <div class="product-tags"><span class="tag">Braille</span><span class="tag">Voz</span></div>
+          </div>
+          <div class="product-footer">
+            <span class="price" aria-label="Preço: R$ 87,00">R$ 87,00</span>
+            <button class="add-btn" onclick="addToCart('Relógio Parlante Tátil','R$ 87,00','⌚')" aria-label="Adicionar Relógio Parlante Tátil ao carrinho, R$ 87,00">+ Adicionar</button>
+          </div>
+        </article>
+
+        <article class="product-card" role="listitem" data-cat="Eletronicos" data-price="high">
+          <div class="product-img" role="img" aria-label="Smartphone pré-configurado com TalkBack e alto contraste">📱</div>
+          <div class="product-body">
+            <span class="product-badge">Eletrônicos</span>
+            <h3 class="product-name">Smartphone Acessível Pré-configurado</h3>
+            <p class="product-desc">Celular com TalkBack ativo, fonte ampliada, cores invertidas e atalhos físicos configurados. Instruções em áudio incluídas na embalagem.</p>
+            <div class="product-tags"><span class="tag">TalkBack</span><span class="tag">Alto contraste</span><span class="tag">Fontes grandes</span></div>
+          </div>
+          <div class="product-footer">
+            <span class="price" aria-label="Preço: R$ 1.299,00">R$ 1.299,00</span>
+            <button class="add-btn" onclick="addToCart('Smartphone Acessível','R$ 1.299,00','📱')" aria-label="Adicionar Smartphone Acessível Pré-configurado ao carrinho, R$ 1.299,00">+ Adicionar</button>
+          </div>
+        </article>
+
+        <article class="product-card" role="listitem" data-cat="Casa" data-price="mid">
+          <div class="product-img" role="img" aria-label="Hub de voz doméstico em cubo compacto">🔊</div>
+          <div class="product-body">
+            <span class="product-badge">Casa</span>
+            <h3 class="product-name">Hub de Voz para Casa</h3>
+            <p class="product-desc">Central de voz que controla luzes, eletrodomésticos e agenda. Responde a comandos naturais em português, sem necessidade de aplicativo ou tela.</p>
+            <div class="product-tags"><span class="tag">Português</span><span class="tag">Casa inteligente</span></div>
+          </div>
+          <div class="product-footer">
+            <span class="price" aria-label="Preço: R$ 249,00">R$ 249,00</span>
+            <button class="add-btn" onclick="addToCart('Hub de Voz para Casa','R$ 249,00','🔊')" aria-label="Adicionar Hub de Voz para Casa ao carrinho, R$ 249,00">+ Adicionar</button>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="a11y-section" id="a11y-features" aria-labelledby="a11y-title">
+    <div class="a11y-inner">
+      <span class="eyebrow">Como essa loja foi pensada</span>
+      <h2 id="a11y-title">Recursos de acessibilidade aplicados</h2>
+      <div class="a11y-grid">
+        <div class="a11y-card">
+          <span class="a11y-icon" aria-hidden="true">🎨</span>
+          <h3>Alto contraste</h3>
+          <p>Paleta escura com amarelo e azul, segura para daltônicos, sem depender de vermelho ou verde para transmitir informação.</p>
+        </div>
+        <div class="a11y-card">
+          <span class="a11y-icon" aria-hidden="true">🔠</span>
+          <h3>Fonte legível e ajustável</h3>
+          <p>Usamos Atkinson Hyperlegible, desenhada para baixa visão. O tamanho pode ser aumentado pelos botões no canto da tela.</p>
+        </div>
+        <div class="a11y-card">
+          <span class="a11y-icon" aria-hidden="true">⌨️</span>
+          <h3>Navegação por teclado</h3>
+          <p>Todos os elementos são acessíveis via Tab e Enter. O foco visível em azul indica claramente o elemento ativo.</p>
+        </div>
+        <div class="a11y-card">
+          <span class="a11y-icon" aria-hidden="true">🔊</span>
+          <h3>Compatível com leitor de tela</h3>
+          <p>Estrutura semântica com ARIA labels, roles e live regions. Cada produto tem descrição completa anunciada automaticamente.</p>
+        </div>
+        <div class="a11y-card">
+          <span class="a11y-icon" aria-hidden="true">👆</span>
+          <h3>Alvos de toque grandes</h3>
+          <p>Todos os botões têm mínimo de 52px, facilitando o clique para pessoas com baixa precisão motora.</p>
+        </div>
+        <div class="a11y-card">
+          <span class="a11y-icon" aria-hidden="true">🔗</span>
+          <h3>Link pular navegação</h3>
+          <p>O primeiro elemento da página é um link que pula direto para o conteúdo, evitando repetir o menu em cada página.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<div class="cart-overlay" id="cartOverlay" onclick="closeCart()" aria-hidden="true"></div>
+
+<aside class="cart-panel" id="cartPanel" role="dialog" aria-modal="true" aria-label="Carrinho de compras" aria-hidden="true">
+  <div class="cart-header">
+    <h2>Seu carrinho</h2>
+    <button class="cart-close" id="cartCloseBtn" onclick="closeCart()" aria-label="Fechar carrinho">✕</button>
+  </div>
+  <div class="cart-items" id="cartItems">
+    <p class="cart-empty">Seu carrinho está vazio.</p>
+  </div>
+  <div class="cart-footer">
+    <div class="cart-total">
+      <span>Total</span>
+      <span class="amount" id="cartTotal" aria-live="polite">R$ 0,00</span>
+    </div>
+    <a class="btn btn-primary" href="#" style="width:100%;justify-content:center;" aria-label="Finalizar compra">Finalizar compra</a>
+  </div>
+</aside>
+
+<footer class="site-footer" id="footer" role="contentinfo">
+  <div class="footer-inner">
+    <div>
+      <p class="footer-brand">VisionShop</p>
+      <p class="footer-tagline">Tecnologia e inclusão para quem precisa.</p>
+    </div>
+    <nav class="footer-links" aria-label="Links do rodapé">
+      <a href="#">Acessibilidade</a>
+      <a href="#">Contato</a>
+      <a href="#">WhatsApp</a>
+    </nav>
+  </div>
+</footer>
+
+<script type="module" src="assets/site.js"></script>
+
+</body>
+</html>
