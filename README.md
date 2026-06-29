@@ -1,1 +1,1 @@
-https://KaioDK.github.io/Usabilidade
+https://kaiodk.github.io/Usabilidade/
