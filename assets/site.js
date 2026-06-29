@@ -18,11 +18,25 @@ function closeCart() {
     document.getElementById('cartOpenBtn').focus();
 }
 
-document.getElementById('cartOpenBtn').addEventListener('click', openCart);
+document.addEventListener('DOMContentLoaded', function () {
+    var cartOpenBtn = document.getElementById('cartOpenBtn');
+    if (cartOpenBtn) cartOpenBtn.addEventListener('click', openCart);
 
-document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape') closeCart();
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') closeCart();
+    });
+
+    var searchInput = document.getElementById('searchInput');
+    if (searchInput) {
+        searchInput.addEventListener('input', applyFilters);
+        applyFilters();
+    }
 });
+
+
+
+
+
 
 function addToCart(name, price, emoji) {
     cart.push({ name: name, price: price, emoji: emoji });
@@ -95,7 +109,8 @@ function filterPrice(btn, val) {
     applyFilters();
 }
 
-document.getElementById('searchInput').addEventListener('input', applyFilters);
+
+
 
 function applyFilters() {
     var query = document.getElementById('searchInput').value.toLowerCase();
@@ -144,3 +159,4 @@ function toggleContrast() {
     var on = document.body.classList.toggle('extra-contrast');
     document.getElementById('contrastBtn').setAttribute('aria-pressed', on ? 'true' : 'false');
 }
+
